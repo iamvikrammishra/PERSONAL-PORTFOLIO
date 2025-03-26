@@ -1,7 +1,14 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Shop } from "@/models/Shop";
 
+import {runMiddleware} from "@/pages/api/middleware";
+import Cors from "cors";
 
+// Initialize the cors middleware
+const cors = Cors({
+  origin: "*",  
+  methods: ["GET", "POST", "PUT", "DELETE"],  // Allowed request methods
+});
 
 export default async function handle(req, res) {
 

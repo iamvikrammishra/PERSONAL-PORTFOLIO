@@ -2,7 +2,14 @@
 import connectToDatabase from '@/lib/mongodb';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import {runMiddleware} from "@/pages/api/middleware";
+import Cors from "cors";
 
+// Initialize the cors middleware
+const cors = Cors({
+  origin: "*",  
+  methods: ["GET", "POST", "PUT", "DELETE"],  // Allowed request methods
+});
 export default NextAuth({
   providers: [
     CredentialsProvider({

@@ -7,7 +7,14 @@ cloudinary.v2.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+import {runMiddleware} from "@/pages/api/middleware";
+import Cors from "cors";
 
+// Initialize the cors middleware
+const cors = Cors({
+  origin: "*",  
+  methods: ["GET", "POST", "PUT", "DELETE"],  // Allowed request methods
+});
 export default async function handle(req, res) {
   await mongooseConnect();
 
