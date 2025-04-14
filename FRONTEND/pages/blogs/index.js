@@ -20,7 +20,7 @@ export default function blogs() {
     const [perPage] = useState(6);
     const [searchQuery, setSearchQuery] = useState('');
 
-    const { alldata, loading } = useFetchData('/api/blogs');
+    const { alldata, loading } = useFetchData('https://personal-portfolio-ana7-2mv8jaxfm.vercel.app/api/blogs');
 
     // Function to handle page change
     const paginate = (pageNumber) => {
