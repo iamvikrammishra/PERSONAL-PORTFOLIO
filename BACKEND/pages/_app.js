@@ -1,3 +1,4 @@
+
 import Aside from "@/components/Aside";
 import Header from "@/components/Header";
 import "@/styles/globals.css";
@@ -6,12 +7,13 @@ import { useRouter } from "next/router";
 import Loading from "@/components/Loading";
 import Aos from "@/components/Aos";
 import ParentComponent from "@/components/ParentComponent";
-import { SessionProvider } from "next-auth/react"
+import { SessionProvider } from "next-auth/react";
 import LoginLayout from "@/components/LoginLayout";
 
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   const [loading, setLoading] = useState(true);
-  const router = useRouter(); // Use useRouter hook
+  const router = useRouter();
+  const [asideOpen, setAsideOpen] = useState(false);
 
   useEffect(() => {
     const handleStart = () => setLoading(true);
@@ -31,37 +33,34 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
       router.events.off('routeChangeComplete', handleComplete);
       router.events.off('routeChangeError', handleComplete);
     };
-  }, [router.isReady]); // Add router.events as dependency
+  }, [router.isReady, router.events]);
 
-  const [asideOpen, setAsideOpen] = useState(false);
-
-  const contAsideOpen = () => {
+  const handleAsideOpen = () => {
     setAsideOpen(!asideOpen);
   };
 
-  return <>
-    {loading ? (
-      // loading while load
-      <div className='flex flex-col flex-center wh_100'>
-        <Loading />
-        <h1 className='mt-1'>Loading...</h1>
-      </div>
-    ) : (
-      <>
+  return (
+    <>
+      {loading ? (
+        // loading while load
+        <div className='flex flex-col flex-center wh_100'>
+          <Loading />
+          <h1 className='mt-1'>Loading...</h1>
+        </div>
+      ) : (
         <SessionProvider session={session}>
-          <ParentComponent appOpen={asideOpen} appAsideOpen={contAsideOpen} />
-        </SessionProvider>
-        <main>
-          <Aos>
-            <div className={asideOpen ? 'container' : 'container active'}>
-              <SessionProvider session={session}>
+          <>
+            <ParentComponent appOpen={asideOpen} appAsideOpen={handleAsideOpen} />
+            <main>
+              <Aos>
+                <div className={asideOpen ? 'container' : 'container active'}>
                   <Component {...pageProps} />
-              </SessionProvider>
-            </div>
-          </Aos>
-        </main>
-      </>
-    )
-    }
-  </>
+                </div>
+              </Aos>
+            </main>
+          </>
+        </SessionProvider>
+      )}
+    </>
+  );
 }
