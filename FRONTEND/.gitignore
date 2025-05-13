@@ -36,3 +36,5 @@ setPath.bat
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+NEXT_PUBLIC_API_URL=https://api.thevkmcoder.com
