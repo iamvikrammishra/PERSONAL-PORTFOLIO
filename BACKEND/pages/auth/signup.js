@@ -7,6 +7,8 @@ import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Spinner from '@/components/Spinner';
+import axios from 'axios';
+import config from '@/utils/config';
 
 export default function SignUp() {
   const { data: session, status } = useSession();
@@ -62,16 +64,12 @@ export default function SignUp() {
     }
 
     try {
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: form.email,
-          password: form.password
-        }),
+      const res = await axios.post(`${config.apiUrl}/api/auth/signup`, {
+        email: form.email,
+        password: form.password
       });
 
-      const data = await res.json();
+      const data = res.data;
       if (data.error) {
         setError(data.error || 'An error occurred during signup');
       } else {
