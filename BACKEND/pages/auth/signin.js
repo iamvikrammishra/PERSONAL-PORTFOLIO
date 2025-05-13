@@ -6,12 +6,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Spinner from '@/components/Spinner';
 
-const config = {
-  // Add backend-specific config here
-  // Example:
-  // dbUrl: process.env.MONGODB_URI,
-};
-
 export default function Signin() {
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
