@@ -3,10 +3,10 @@
 
 import { useSession, signIn } from 'next-auth/react';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import Spinner from '@/components/Spinner';
 
-export default function signin() {
+export default function Signin() {
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ email: '', password: '' });
@@ -17,7 +17,7 @@ export default function signin() {
     if (status === 'authenticated') {
       router.push('/');
     }
-  }, [status, router]);
+  }, [status]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import config from '@/utils/config';
 
 function useFetchData(apiEndpoint) {
   const [alldata, setAlldata] = useState([]);
@@ -27,13 +28,13 @@ function useFetchData(apiEndpoint) {
     // Function to fetch blog data
     const fetchAllData = async () => {
       try {
-        const res = await axios.get(apiEndpoint);
+        const res = await axios.get(`${config.apiUrl}${apiEndpoint}`);
         const alldata = res.data;
         setAlldata(alldata);
         setAllwork(alldata);
         setLoading(false); // Set loading state to false after data is fetched
       } catch (error) {
-        console.error('Error fetching blog data:', error);
+        console.error('Error fetching data:', error);
         setLoading(false); // Set loading state to false even if there's an error
       }
     };

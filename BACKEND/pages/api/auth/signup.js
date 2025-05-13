@@ -10,6 +10,12 @@ const cors = Cors({
   origin: "*",  
   methods: ["GET", "POST", "PUT", "DELETE"],  // Allowed request methods
 });
+
+const corsHandler = Cors({
+  origin: ['https://thevkmcoder.com', 'http://localhost:3000'],
+  credentials: true
+});
+
 export default async function handler(req, res) {
   await mongooseConnect();
 
